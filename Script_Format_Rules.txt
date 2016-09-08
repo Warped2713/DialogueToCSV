@@ -1,0 +1,199 @@
+﻿//[Title] Script Format Guide
+//[Characters] Player, NPC, System
+//[Section] About This Guide
+// The purpose of this document is to create a smooth pipeline between story writing, music, and programming aspects of the project. The following formats were chosen to help preserve the readability of the script, while enabling us to mark where special effects or game logic should occur to support the plot.
+
+// ============================================================
+
+// Supported Characters (UTF-8 w/o BOM):
+// ABCDEFGHIJKLMNOPQRSTUVWXYZ
+// abcdefghijklmnopqrstuvwxyz
+// 0123456789
+// .,;:¿?¡!@#$€£%^<>&*()[]{}-_+=/¢|¤~
+// “”"‘’'`´¸¨ºª©°…
+// Emoticon set symbols (automated):
+// :) => ¶
+// ;) => ¦
+// :D => §
+// <3 => ‡
+// :( => †
+
+
+// ============================================================
+
+// Simple Message Patterns
+
+
+// Standard Message
+{{ Message text }}
+
+// Standard Message with Choice
+{{ Message text }} [[#Tag]]
+
+// ^ Note that simple messages should never come directly after a simple message with a [[#Tag]], because once the [[#Tag]] is found, the next line of text will be a Choice Set option (or non-option).
+
+
+// Multiple Lines in Single Message
+{{ Message text paragraph 1
+Message text paragraph 2
+Message text paragraph 3 }}
+
+// Consecutive Separate Messages
+{{ Message text paragraph 1 }} 
+{{ Message text paragraph 2 }} 
+{{ Message text paragraph 3 }} 
+
+
+// =================================================================
+
+// Choice Set Patterns
+
+
+// Standard (maximum of 4 options)
+#Tag Choice Set
+[0] Option 1
+{{ Answer 1 }} [[#Tag]]
+[0] Option 2
+{{ Answer 2 }} [[#Tag]]
+[0] Option 3
+{{ Answer 3 }} [[#Tag]]
+
+// Shared Next Line
+#Tag2 Choice Set
+[0] Option 1
+{{ Answer 1 }} [[Next]]
+[0] Option 2
+{{ Answer 2 }} [[Next]]
+[0] Option 3
+{{ Answer 3 }} [[Next]]
+{{ Shared Next Line }} [[#Tag2]]
+
+// No Options
+#Tag3 Choice Set
+{{ Answer 1 }} [[#Tag3]]
+
+// Multiple Messages per Option
+#Tag4 Choice Set
+[0] Option 1
+{{ Answer 1 }}
+{{ Answer 1 Continuation }} [[#Tag4]]
+[0] Option 2
+{{ Answer 2 }} [[#Tag4]]
+[0] Option 3
+{{ Answer 3 }} 
+{{ Answer 3 Continuation }} [[#Tag4]]
+
+// Consecutive Shared Next Lines
+#Tag5 Choice Set
+[0] Option 1
+{{ Answer 1 }} [[Next]]
+[0] Option 2
+{{ Answer 2 }} [[Next]]
+[0] Option 3
+{{ Answer 3 }} [[Next]]
+{{ Shared Next Line 1 }}
+{{ Shared Next Line 2 }} [[#Tag5]]
+
+// ^ Note that the only time it is valid to have an {{ Answer }} line without a [[#Tag]] is if the line ends with [[Next]] or if the line immediately precedes a line with a [[#Tag]] or [[Next]]
+
+
+// Choice Without Response
+#Tag6 Choice Set
+[0] Option 1
+{{ Answer 1 }} [[End]]
+[0] Option 2
+{{ Answer 2 }} [[End]]
+[0] Option 3
+{{ Answer 3 }} [[End]]
+// ^ Each of these {{ Answers }} automatically link to the very last (assumed to be simple) message in the chapter. Usually this is the system saying “NPC went offline.” It is possible to have one of the choices lead to [[End]] and have the other two choices lead to a response set (with appropriate [[#Tag]])
+
+// =======================================================
+
+
+// Response Set Patterns
+
+
+// Standard (Branching)
+#Tag1 Response Set
+{{ Response 1 }} [[#Tag2]]
+{{ Response 2 }} [[#Tag3]]
+{{ Response 3 }} [[#Tag4]]
+
+// Standard (Non-Branching)
+#Tag2 Response Set
+{{ Response 1 }} [[#Tag5]]
+{{ Response 2 }} [[#Tag5]]
+{{ Response 3 }} [[#Tag5]]
+
+// ^ Each response leads to the same choice set #Tag5
+
+
+// Single Response For All Choices
+#Tag3 Response Set
+{{ Response 1 }} [[#Tag6]]
+
+// ^ Note that if you want two choice lines to lead to one response, and a third choice line to lead to a different response, just duplicate the first response
+
+
+// Shared Next Line
+#Tag4 Response Set
+{{ Response 1 }} [[Next]]
+{{ Response 2 }} [[Next]]
+{{ Response 3 }} [[Next]]
+{{ Shared Next Line }} [[#Tag7]]
+
+// ^ Each response leads to the same shared line of text, and then link to the same choice set #Tag7. If you want the shared line of text to link to different choice sets, just create three different response sets with copies of the same line of text and different [[#Tag]] links
+
+// Consecutive Shared Line
+#Tag7 Response Set
+{{ Response 1 }} [[Next]]
+{{ Response 2 }} [[Next]]
+{{ Response 3 }} [[Next]]
+{{ Shared next line }}
+{{ Shared next line 2 }} [[#Tag9]]
+
+// Consecutive Shared Condition
+#Tag7 Response Set
+{{ Response 1 }} [[Condition]]
+{{ Response 2 }} [[Condition]]
+{{ Response 3 }} [[Condition]]
+//[Condition] variable_name == value
+{{ Response for meeting condition }} [[Next]]
+//[Condition] Else
+{{ Response for failing condition }} [[Next]]
+{{ Shared next line }} [[#Tag9]]
+
+// End Response
+#Tag8 Response Set
+{{ Response 1 }} [[End]]
+{{ Response 2 }} [[End]]
+{{ Response 3 }} [[End]]
+// Will automatically link to the very last message in the chapter
+// Usually this is the system saying Katie went offline
+
+
+
+// ============================================================
+
+//Events and Conditions
+
+// Standard Event
+//[Event Trigger] Character status = offline|online|away|unknown
+//[Event Trigger] Request variable_name
+//[Event Trigger] Notification: New Message from Character
+//[Event Trigger] Display pop-up: title_of_popup
+
+// Special Effect Event
+//[Event Trigger] Play SoundEffect.wav
+//[Event Trigger] Change Music to Theme.wav
+
+// Set a Global Variable
+//[Event Trigger] Set variable_name = value 
+// At this point in the script, assign this variable the given value
+
+// Conditionals
+//[Condition] variable_name == value
+// The enclosed text and events will only be used if this condition is met. Please don’t change the value of variable_name used in this conditional block.
+// [EndCondition]
+
+// In Construct 2, first check the “Condition” field. If it is true, display the line text, trigger the events in “Triggered” field, and follow the “nextID”. If “Condition” field is not true, just follow the “nextID”.

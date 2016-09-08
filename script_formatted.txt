@@ -1,0 +1,301 @@
+//[Title] A Casual Chat
+//[Characters] Katie, Player, CHAT SYSTEM
+
+//[Default] firstname = FirstName
+//[Default] username = player01
+//[Default] area_of_study = Undecided
+//[Default] major = 
+//[Default] profession = 
+//[Default] occupation = school
+//[Default] met_counselor = false
+//[Default] ending = 1
+//[Section] Chapter 1
+
+//INT. Chat Box//
+
+//A few seconds after PLAYER selects a second a new window from IM app pops up, showing a message from KATIE (KatHops43)//
+
+//[Event Trigger] Notification: New Message from KatHops43
+
+Katie
+{{ Hey there!  Got you as my possible “new friend of the day” and figured I’ll try this thing out. }}
+{{ I’m Katie, what’s your name? }} [[#Intro]]
+
+Player
+#Intro Choice Set:
+[+1] Hey there!
+{{ Hey there!  I’m %firstname%, how are you Katie? }} [[#Intro]]
+[+1] What’s up?
+{{ What’s up?  I’m %username%. }} [[#Intro]]
+[+1] Who are you?
+{{ Who are you?  Have we met before? }} [[#Intro]]
+
+Katie
+#Intro Response Set:
+{{ Hi!  It’s nice to meet you! }}
+{{ I’m doing great! }}
+{{ Just started senior year at high school and things have been awesome. }} [[Next]]
+{{ Oh nothing much :) }}
+{{ Just chilling after the first week of school. }}
+{{ Just started senior year and I’m really excited. }} [[Next]]
+{{ Um, you don’t know me but we’re chatting since I decided to try out the “new friend of the day” thing. }}
+{{ So… hi? }} [[Next]]
+
+{{ Anyways, so what’s going on with you? }}
+{{ School started yet for you? }} [[#Living]]
+
+Player
+#Living Choice Set:
+[0] I’m a high school student. 
+//[Event Trigger] Set occupation = school
+{{Yeah, started two weeks ago, so just hanging after school now. }}
+{{ Not really feeling the stuff I gotta do. }}
+{{ Can’t wait to get out of high school and into college, you know? }} [[#Living]]
+[0] I’m a college student. 
+//[Event Trigger] Set occupation = college
+{{ I’m actually in college right now. }}
+{{ Just chilling after my busy day today.}}
+{{ Luckily one of my professors cancelled class so I got back to the dorm early. }}
+{{ Can’t wait to just shower and relax. }} [[#Living]]
+[0] I’m done with school! 
+//[Event Trigger] Set occupation = work
+{{ lol I’m done with school already }}
+{{ Relaxing after work now.  Had a long shift today so just unwinding after a long day }}
+{{  At least I don’t have to do homework anymore. :) }} [[#Living]]
+
+Katie
+#Living Response Set:
+{{ For real! :D I can’t believe I got into Northbridge University. }}
+{{ They’re my first choice and I went with their early acceptance program.  Sooo excited! }} [[#Acceptance]]
+{{ Oh that’s so cool! }}
+{{ I just got into Northbridge U and I’m super excited. }}
+{{ What are you studying? }} [[#Studying]]
+{{ Ah, yea I’m not going to miss homework}}
+{{ at least not high school homework anyways}}
+{{ Hopefully I’ll have more time at Northbridge U next year}}
+{{  What do you do for work? }} [[#Profession]]
+
+Player
+#Acceptance Choice Set:
+[0] Eh, cool. 
+{{ Eh, cool.  I guess.  Good for you. }}  [[#Acceptance]]
+[+2] Congratulations! 
+{{ Congrats! }}
+{{ I’m pretty nervous about applications this year as well. }}
+{{ Got a few schools on my list but hopefully I can get my first pick ^_^ }}  [[#Acceptance]]
+[+1] That’s impressive! 
+{{ That’s impressive! }}
+{{ Northbridge’s pretty hard to get into. }}
+{{ What were your NOP scores? }}  [[#Acceptance]]
+
+#Studying Choice Set:
+//[Condition] area_of_study == Liberal Arts
+{{ Oh, my major is %major%. }}
+{{ I really enjoy the large variety of classes we can take.  Having options is really nice. }} [[Next]]
+//[EndCondition]
+//[Condition] area_of_study == Business
+{{ I’m in the business school studying %major%}}
+{{ Hoping make some friends and connections and head up the ladder after I get my degree. }} [[Next]]
+//[EndCondition]
+//[Condition] area_of_study == Sciences
+{{ Oh, I’m a %major%. }}
+{{ Doing a bit of lab work as well. }}
+{{ Thinking about double majoring in something else, but I’m not sure right now. }} [[Next]]
+//[EndCondition]
+//[Condition] area_of_study == Undecided
+{{ Haven’t really decided on a major yet. }}
+{{ I’m still undecided so far and I feel like trying more classes before deciding. }} [[Next]]
+//[EndCondition]
+
+{{ What do you think you will want to study next year? }} [[#Studying]]
+
+#Profession Choice Set:
+{{ Oh, I’m a %profession%. }}
+{{ It has its ups and downs, but ultimately I find the job rewarding. }}
+{{ The money’s enough to live on and I enjoy doing the work everyday, so that’s more than I can ask for. }}
+{{ So, what do you think you’ll want to study next year? }} [[#Profession]]
+
+Katie
+#Acceptance Response Set:
+{{ Er, thanks, I suppose? }} [[Next]]
+{{ Thanks! :)}}
+{{ Good luck with your own applications. }}
+{{ I’m sure you’ll do great! (even though I just met you XD) }}
+{{ It took a lot of work and effort (not to mention money.  Urgh, I had to spend a good chunk of last year’s Christmas stash!) but it’s all worth it in the end. }} [[Next]]
+{{ Yeah, they only take like 10% of all applicants, and less if you do early acceptance applications. }}
+{{ I was actually pretty surprised when I got the letter in the mail since my NOP Score was only 1800. }}
+{{ If you can imagine a 17 year old brown hair girl flipping out on her front porch, that was me that day XD. }} [[Next]]
+
+{{ So what do you mostly like to do for fun? }} [[#Hobby]]
+
+#Studying Response Set:
+{{ I really like working with animals, so I’m hoping to go pre-med with a major in biology, and eventually go to veterinary school. }}
+{{ I’m actually volunteering at the animal shelter that’s like, five minutes from my house? }}
+{{ My two best friends do it with me so it’s a lot of fun. :)}}
+{{ So what do you mostly like to do for fun? }} [[#Hobby]]
+
+#Profession Response Set:
+{{ Oh wow. }}
+{{ Sounds like it has its moments :)}}
+{{  I’m glad you enjoy your work though.  Always good to take pride in what you do.}}
+{{ I really like working with animals, so I’m hoping to go pre-med with a major in biology, and eventually go to veterinary school. }}
+{{ So what do you mostly like to do for fun? }} [[#Hobby]]
+
+Player:
+#Hobby Choice Set:
+[0] Stay home(TV/Internet/etc.). 
+{{ Oh, I mostly stay home. }}
+{{ Between InterFilms, chatting with friends online and video games, the hours just kind of fly by haha. }} [[#Hobby]]
+[0] Play Sports. 
+{{ I usually go %play sport%. }}
+{{ I’ve been doing it since I could walk, and loved every minute. }}
+{{ It’s exhausting at times, but I have a lot of fun outside as well. }} [[#Hobby]]
+[0] Go out and hang with friends. 
+{{ I’m usually hanging with friends}}
+{{ Going to the mall, to each other’s house, out to eat}}
+{{ Sometimes one of us will feel spontaneous and we’ll all go try something new together.  Almost like an adventure. }} [[#Hobby]]
+
+Katie:
+#Hobby Response Set
+{{ Yeah, I’m kind of like that. }}
+{{ If I’m not hanging with Chase and Jenna or at softball and volleyball practice, I’m usually at home. }}
+{{ They’re my best friends btw. }}
+{{ Omg I spend so much time binging on shows with InterFilms. }}
+{{ Had to pull plenty of late nighters because of it but watching the last season of Bolt was sooo worth it XD. }} [[#Smalltalk]]
+{{ Oh fun! }}
+{{ I like softball and volleyball myself! }}
+{{ One of my best friend Chase is the best athlete out of all of us though.  Captain of the school soccer team and in the baseball team also. }}
+{{ Good to meet another member of the sport’s club :) }} [[#Smalltalk]]
+{{ Wow! }}
+{{ I’m so jealous right now. }}
+{{ I mean my best friends, Chase, Jenna and I have done some cool things like mountain biking, but those are far and few in between.}}
+{{  It sounds like you guys do that stuff all the time. }}
+{{ That’s awesome! }} [[#Smalltalk]]
+
+Player
+#Smalltalk Choice Set:
+[+1] How are you doing? 
+{{ What’s happening with you?  How was your day? }} [[#Smalltalk]]
+[-1] Are we done? 
+{{ So that was... a nice chat. }}
+{{ Are we done here? }} [[#Smalltalk]]
+[0] What’s up? 
+{{ What’s up on your end? }} [[#Smalltalk]]
+
+Katie
+#Smalltalk Response Set
+{{ Oh nothing much :) }} [[Next]]
+{{ Well, I was going to tell you about how I am… Do you have to be somewhere now? }}
+{{ No? }}
+{{ Cool. }} [[Next]]
+{{ Oh nothing much :) }} [[Next]]
+
+{{ I’m just really happy with my new boyfriend, Marc. }}
+{{ We started dating around two weeks ago and it’s been great. }}
+{{ He’s really sweet and chill at the same time ^_^}} [[#Datingquestionlist]]
+
+Player
+#Datingquestionlist Choice Set:
+[1] Awesome. What’s he like?
+{{ That sounds pretty good. }}
+{{ So what does Marc like to do? }} [[Next]]
+[1] Cool. Glad you’re happy.
+{{Huh, cool. }}
+{{ I’m glad you’ve found someone that makes you happy :) }} [[Next]]
+[-1] Since you’ll probably tell me anyways…
+{{*sigh* I’m guessing you’ll talk about Marc anyways.  Might as well make this go faster. }} [[Next]]
+
+{{ How did you two meet? }} [[#Datingquestionlist]]
+
+Katie
+#Datingquestionlist Response Set
+{{ Oh Marc’s in high school like me. }}
+{{ He really likes cooking and wants to be a chef one day, so right now he’s just saving up to go to culinary school. }} [[Next]]
+{{ Yeah, and before I left high school too! }}
+{{ I figured all guys my age were immature jerks lol }} [[Next]]
+{{ *rolls eyes* well no one’s making you talk to me… }} [[Next]]
+
+{{ In any case, we met at the local animal shelter where me and my friends volunteer at. }}
+{{ Turns out Marc likes to drop by to play with the animals whenever he could get out of the house, which isn’t the most peaceful place. }}
+{{  We hit it off really well and a week later, after he had met Chase and Jenna, we started going out. }} [[#Parentsargue]]
+
+Player
+#Parentsargue Choice Set:
+[+1] He sounds cool. 
+{{ Wow, Marc seems like a cool guy. }}
+{{ I’m happy for you :) }} [[#Parentsargue]]
+[-1] Sounds like a tool. 
+{{ Guy’s a tool. }}
+{{ He’s probably just trying to get under your skirt at the party. }} [[#Parentsargue]]
+[+1] How sweet! 
+{{ That’s really romantic! }}
+{{ You did luck out :D }} [[#Parentsargue]]
+
+Katie
+#Parentsargue Response Set
+{{ Thanks! }}
+{{ Things are looking really awesome in the immediate future lol.}} [[Next]]
+{{ Well, I think you’re wrong about that. }}
+{{ He’s been nothing but a gentleman to me so far.}} [[Next]]
+{{ Mhmm, that’s how I feel right now :) }} [[Next]]
+
+{{ Urgh, my parents are yelling again. }}
+{{ G2g}}
+{{ Add you on my friends list? }} [[#Friendlist]]
+
+Player
+#Friendlist Choice Set:
+[0] Sure thing. 
+{{ Sure, you seem pretty cool. }}
+{{ Ttyl then? }} [[#Friendlist]]
+[1] Absolutely! 
+{{ Definitely! }}
+{{ Nice meeting you Katie! }}
+{{ Hope you have a nice week at school! ^_^ }} [[#Friendlist]]
+[-1] If you must. 
+{{ I mean, if you want. }}
+{{ I don’t see why you would, but okay. *shrug* }} [[#Friendlist]]
+
+Katie
+#Friendlist Response Set
+{{ Haha, you seem pretty cool too :)}}
+{{  Catch you later! }} [[End]]
+{{ Okay, I’ll add you in a bit then! }}
+{{ I hope you have a great week too :D }} [[End]]
+{{ Then I’ll add you to the list}}
+{{ Bye then. }} [[End]]
+
+//[Event Trigger] Add Friend KatHops43
+
+CHAT SYSTEM
+{{ KatHops43 has logged off. }}
+//[Event Trigger] KatHops43 status = offline
+
+
+
+//[Section] Endings
+
+//[Condition] ending == 1
+//Ending 1 (Incomplete)://
+
+//Special Dialogue Line://
+//[Event Trigger] KatHops43 status = online
+
+Chat System
+{{ KatHops43 has logged on. }}
+
+Katie
+{{ Yeah, I don’t think we’re really clicking. }}
+{{  Sorry to have bothered you.  Have a nice day. }}
+
+//[Event Trigger] KatHops43 status = offline
+//[EndingText] Insert ending text here for the first possible ending!//
+
+//[EndCondition]
+
+
+//[Condition] ending == 2
+//Ending 2 (Worst)://
+//[EndingText] Insert ending text here for the second possible ending!//
+//[EndCondition]
+
